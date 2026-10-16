@@ -1,12 +1,9 @@
 namespace eventual.Models;
 
-public class OrderStatus
+public enum OrderStatus
 {
-    public enum Status
-    {
-        Pendent, 
-        Purchased, 
-        Block,
-        Expired
-    };
-}
+    Pendent,
+    Paid,
+    Declined,
+    Expired
+};
