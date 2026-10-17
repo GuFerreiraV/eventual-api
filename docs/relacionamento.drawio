@@ -1,0 +1,49 @@
+<mxfile host="65bd71144e">
+    <diagram id="MvBkaPAkTz_TT9I-qHkC" name="Page-1">
+        <mxGraphModel dx="882" dy="957" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="ZsjJN1emIn1mzll71gla-3" edge="1" parent="1" source="ZsjJN1emIn1mzll71gla-1" style="edgeStyle=none;html=1;startArrow=classic;startFill=1;endArrow=none;endFill=0;" target="ZsjJN1emIn1mzll71gla-2" value="">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-4" connectable="0" parent="ZsjJN1emIn1mzll71gla-3" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rotation=0;" value="N - 1" vertex="1">
+                    <mxGeometry relative="1" x="0.025" y="-1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Event" vertex="1">
+                    <mxGeometry height="60" width="120" x="50" y="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-2" parent="1" style="whiteSpace=wrap;html=1;rounded=1;roundedPerimeter=1;" value="Lote" vertex="1">
+                    <mxGeometry height="60" width="120" x="50" y="190" as="geometry"/>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-6" edge="1" parent="1" source="ZsjJN1emIn1mzll71gla-5" style="edgeStyle=none;html=1;endArrow=classic;endFill=1;" target="ZsjJN1emIn1mzll71gla-2">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-7" connectable="0" parent="ZsjJN1emIn1mzll71gla-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="1 - N" vertex="1">
+                    <mxGeometry relative="1" x="0.1111" y="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Order" vertex="1">
+                    <mxGeometry height="60" width="120" x="50" y="340" as="geometry"/>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-9" edge="1" parent="1" source="ZsjJN1emIn1mzll71gla-8" style="edgeStyle=none;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="ZsjJN1emIn1mzll71gla-5">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-10" connectable="0" parent="ZsjJN1emIn1mzll71gla-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="N - 1" vertex="1">
+                    <mxGeometry relative="1" x="0.0286" y="-3" as="geometry">
+                        <mxPoint x="-3" y="1" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;roundedPerimeter=1;" value="Ticket" vertex="1">
+                    <mxGeometry height="60" width="120" x="50" y="470" as="geometry"/>
+                </mxCell>
+                <mxCell id="ZsjJN1emIn1mzll71gla-13" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FLUXO GERAL" vertex="1">
+                    <mxGeometry height="30" width="60" x="80" y="10" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

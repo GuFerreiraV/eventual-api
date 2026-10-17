@@ -8,7 +8,6 @@ Microsoft.EntityFrameworkCore.InMemory NSwag.AspNetCore
 <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.13" />
 <PackageReference Include="NSwag.AspNetCore" Version="14.7.1" />
 */
-
 ```
 ## Desenvolvimento local
 ```shell
