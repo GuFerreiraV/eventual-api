@@ -4,9 +4,10 @@ Por que se encaixa no seu nível: em ASP.NET (intermediário), o projeto exige a
 
 Escopo: mais de 1 mês
 
-Ponto de partida:
-
-POST /events e POST /events/{id}/batches para criar o evento e os lotes (organizador)
-POST /orders compra ingressos e garante o estoque com controle de concorrência
-GET /tickets/{id}/qrcode devolve o QR code em PNG
-POST /checkin valida o código e impede que o mesmo ingresso entre duas vezes
+## Rotas de eventos
+GET  /events                  → lista resumida
+GET  /events/{eventId}        → detalhe + lotes
+POST /events                  → 201
+GET  /events/{eventId}/lotes  → lotes do evento
+POST /events/{eventId}/lotes  → 201
+GET  /lotes/{id}              → lote isolado
