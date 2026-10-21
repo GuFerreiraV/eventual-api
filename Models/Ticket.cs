@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace eventual.Models;
 
 public class Ticket
@@ -7,4 +9,6 @@ public class Ticket
     public Order Order {get; set;} = null!;
     public Guid Code {get; set;} = Guid.NewGuid(); // o que vai dentro do qrcode
     public DateTime? CheckedInAt {get; set;}
+    [ConcurrencyCheck]
+    public Guid Version {get; set;} = Guid.NewGuid(); // trocada no check-in: impede duas entradas com o mesmo QR
 }

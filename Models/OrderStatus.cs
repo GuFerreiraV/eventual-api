@@ -1,8 +1,11 @@
+using System.Text.Json.Serialization;
+
 namespace eventual.Models;
 
+[JsonConverter(typeof(JsonStringEnumConverter<OrderStatus>))]
 public enum OrderStatus
 {
-    Pendent,
+    Pending,
     Paid,
     Declined,
     Expired
