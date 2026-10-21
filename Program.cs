@@ -1,5 +1,6 @@
 using eventual.Data;
 using eventual.Handlers;
+using eventual.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<EventualDbContext>(options => options.UseInMemoryDatabase("eventual"));
+
+builder.Services.AddScoped<ILoteService, LoteService>();
+builder.Services.AddScoped<IEventService, EventService>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
