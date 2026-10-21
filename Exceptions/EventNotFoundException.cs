@@ -1,4 +1,4 @@
 namespace eventual.Exceptions;
 
 public class EventNotFoundException(int eventId) 
-    : DomainException($"Evento {eventId} não encontrado.");
+    : NotFoundException($"Evento {eventId} não encontrado.");
