@@ -1,6 +1,7 @@
 using eventual.Data;
 using eventual.Handlers;
 using eventual.Services;
+using eventual.Services.Payments;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ builder.Services.AddDbContext<EventualDbContext>(options => options.UseInMemoryD
 
 builder.Services.AddScoped<ILoteService, LoteService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICheckInService, CheckInService>();
+builder.Services.AddScoped<IPaymentGateway, FakePaymentGateway>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
