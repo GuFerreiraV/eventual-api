@@ -1,3 +1,5 @@
 bin/
 obj/
 appsettings.json
+# Senhas reais dos Docker secrets (versionar só o .example)
+secrets/*.txt

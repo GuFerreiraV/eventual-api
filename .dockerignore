@@ -1,0 +1,6 @@
+**/bin/
+**/obj/
+.git/
+.vibe-wise/
+secrets/
+Eventual.Tests/

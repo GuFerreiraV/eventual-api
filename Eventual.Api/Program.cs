@@ -3,13 +3,23 @@ using Eventual.Api.Handlers;
 using Eventual.Api.Services;
 using Eventual.Api.Services.Payments;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Docker secrets: cada arquivo em /run/secrets vira uma chave de configuração
+// (Database__Password -> Database:Password). Fora do container, a senha vem do user-secrets.
+builder.Configuration.AddKeyPerFile("/run/secrets", optional: true);
 
 // Add services to the container.
 builder.Services.AddControllers();
 
-builder.Services.AddDbContext<EventualDbContext>(options => options.UseInMemoryDatabase("eventual"));
+var connectionString = new NpgsqlConnectionStringBuilder(builder.Configuration.GetConnectionString("Eventual"))
+{
+    Password = builder.Configuration["Database:Password"]
+}.ConnectionString;
+
+builder.Services.AddDbContext<EventualDbContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddSingleton(TimeProvider.System);
 
@@ -40,6 +50,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    // Em dev o schema acompanha as migrations sem passo manual.
+    using (var scope = app.Services.CreateScope())
+    {
+        scope.ServiceProvider.GetRequiredService<EventualDbContext>().Database.Migrate();
+    }
+
     app.MapOpenApi();
     app.UseSwaggerUi(options =>
     {

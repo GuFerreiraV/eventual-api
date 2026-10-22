@@ -1,27 +1,56 @@
 ## Pacotes & Dependências
 ```shell
-dotnet add package Microsoft.AspNetCore.OpenApi 
-Microsoft.EntityFrameworkCore.InMemory NSwag.AspNetCore
+dotnet add package Microsoft.AspNetCore.OpenApi NSwag.AspNetCore
+dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+dotnet add package Microsoft.EntityFrameworkCore.Design   // ferramenta de migrations
 
 /* output
 <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.13" />
-<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.13" />
+<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.13" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.13" />
 <PackageReference Include="NSwag.AspNetCore" Version="14.7.1" />
 */
 ```
 ## Desenvolvimento local
+
+O banco é **PostgreSQL 17** em container. A senha nunca vai para o git: crie `secrets/db_password.txt` (na raiz, copiando `secrets/db_password.txt.example`) com a senha que quiser.
+
+### Modo 1: tudo no compose (API + Postgres)
 ```shell
-    dotnet dev-certs https --trust // confiança em certificado de desenvolvimento https
-    dotnet run --launch-profile https // rodando app 
+docker compose up -d --build   // API em http://localhost:8080/swagger
+docker compose down            // para os containers; os dados ficam no volume eventual-data
+docker compose down -v         // para e APAGA o volume (banco zerado)
 ```
+A senha chega aos dois containers como **Docker secret** (arquivo em `/run/secrets/Database__Password`). O Postgres lê via `POSTGRES_PASSWORD_FILE`; a API lê via `AddKeyPerFile`, que vira a chave `Database:Password`. Dentro do compose a API acessa o banco pelo nome do serviço (`Host=postgres`).
+
+### Modo 2: só o Postgres no container, API com `dotnet run`
+```shell
+cd Eventual.Api
+dotnet user-secrets set "Database:Password" "<mesma senha do arquivo>"   // uma vez
+cd ..
+docker compose up -d postgres
+cd Eventual.Api
+dotnet dev-certs https --trust
+dotnet run --launch-profile https
+```
+Aqui a API roda fora do container (não enxerga `/run/secrets`), então a senha vem do **user-secrets** do .NET e o banco é `localhost:5432`.
+
+Nos dois modos, em Development a API aplica as **migrations** pendentes ao iniciar. Nova mudança no modelo: `dotnet ef migrations add <Nome> --project Eventual.Api`.
+
+### Testes
+```shell
+dotnet test
+```
+Exige o **Docker ligado**. O Testcontainers sobe um Postgres descartável (separado do banco de dev), cria um banco novo por teste e remove o container no fim.
 
 ## Testando pelo Swagger
 
-Com a aplicação rodando (perfil `https`), abra **https://localhost:7201/swagger**.
+Com a aplicação rodando, abra **https://localhost:7201/swagger** (modo 2) ou **http://localhost:8080/swagger** (modo 1).
 
 Em cada rota: clique nela → **Try it out** → preencha os parâmetros/corpo → **Execute**. A resposta aparece logo abaixo, com o status code e o corpo.
 
-> O banco é **InMemory**: tudo é apagado quando a aplicação reinicia, e os ids voltam a começar em 1. Se a aplicação já estava aberta antes de uma mudança no código, pare-a (`Ctrl+C`) e rode `dotnet run` de novo.
+> O banco é **PostgreSQL** com volume: os dados sobrevivem a reinícios. Para começar do zero, `docker compose down -v`. Se a aplicação já estava aberta antes de uma mudança no código, pare-a (`Ctrl+C`) e rode `dotnet run` de novo (ou `docker compose up -d --build` no modo 1).
 
 ### Roteiro: do evento à reserva
 

@@ -43,6 +43,8 @@ Swagger UI (dev) -> /openapi/v1.json
 ## Data and Trust Boundaries
 EF Core InMemory package referenced but no DbContext yet. Learner chose EF Core InMemory for the MVP (data lost on restart; no transactions; optimistic concurrency tokens enforced). No auth configured (UseAuthorization present, no scheme).
 
+Implemented Postgres migration (verified 2026-10-22): Npgsql provider (connection string ConnectionStrings:Eventual + Database:Password from Docker secret via AddKeyPerFile or .NET user-secrets); Migrations/Initial applied on startup in Development; Eventual.Api/Dockerfile; compose.yaml (postgres:17, api, volume eventual-data, secret db_password); secrets/*.txt gitignored; tests use Testcontainers Postgres (one container per run, new DB per test). Note: appsettings.json is gitignored by the learner's .gitignore.
+
 ## Layout (2026-10-22)
 Z:\APIs (to become Z:\Eventual): Eventual.slnx, Eventual.Api/ (Eventual.Api.csproj, namespace Eventual.Api), Eventual.Tests/ (namespace Eventual.Tests). Git repo at the root (moved from Eventual.Api/.git on 2026-10-22; remote GuFerreiraV/eventual-api).
 
