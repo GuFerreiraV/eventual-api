@@ -1,0 +1,61 @@
+using Eventual.Api.Data;
+using Eventual.Api.Handlers;
+using Eventual.Api.Services;
+using Eventual.Api.Services.Payments;
+using Microsoft.EntityFrameworkCore;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddControllers();
+
+builder.Services.AddDbContext<EventualDbContext>(options => options.UseInMemoryDatabase("eventual"));
+
+builder.Services.AddSingleton(TimeProvider.System);
+
+builder.Services.AddScoped<ILoteService, LoteService>();
+builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICheckInService, CheckInService>();
+builder.Services.AddScoped<IPaymentGateway, FakePaymentGateway>();
+
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, context, cancellationToken) =>
+    {
+        document.Info.Title = "Eventual API";
+        document.Info.Version = "v1";
+        document.Info.Description =
+            "Venda de ingressos de eventos: lotes com estoque, reserva com expiração, " +
+            "pagamento (gateway de testes) e check-in por QR code.";
+        return Task.CompletedTask;
+    });
+});
+
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<DomainExceptionHandler>();
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.UseSwaggerUi(options =>
+    {
+        options.DocumentPath = "/openapi/v1.json";
+    });
+}
+
+app.UseExceptionHandler();
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+// Permite que o projeto de testes suba a API com WebApplicationFactory<Program>.
+public partial class Program;

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Eventual.Api/Eventual.Api.csproj" />
+  <Project Path="Eventual.Tests/Eventual.Tests.csproj" />
+</Solution>
